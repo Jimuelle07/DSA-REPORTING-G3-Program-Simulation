@@ -3,3 +3,5 @@ scripts/
 .git
 .gitignore
 serve.json
+.vercel/
+node_modules/

@@ -79,7 +79,7 @@ Build-time table (the doc lists them, nothing is done now):
 | `stack/index.html`, `stack/editor.js` | Load the shared files. `editor.js` passes `title: 'UNDO_REDO.C'`, `filename: 'undo_redo.c'`, `sections: ['DATA','STACK OPS','UNDO/REDO','HELPERS','MAIN']`, `types: ['Action','Stack']`, the existing watch format, and the existing 13 tour steps. The stack page must look and behave identically. |
 | `scripts/check-c.mjs` | Table of programs: `stack` → `stack/c-source.js`, `scripts/expected-stack.txt`, binary `undo_redo`; `queue` → `queue/c-source.js`, `scripts/expected-queue.txt`, binary `drive_thru`. `node scripts/check-c.mjs` checks both; `node scripts/check-c.mjs queue` checks one. Prints `check-c: <name> OK (…)` per program and exits non-zero on the first failure. Same compiler flags as today. |
 | `index.html` (landing) | QUEUE card turns into an `<a class="card sim-card" href="queue/index.html" style="--tilt:3deg">`: drop `is-soon`, `aria-disabled`, and the `COMING SOON` stamp; subtitle `DRIVE-THRU & KITCHEN`; meta `FIRST IN, FIRST OUT`; add a lime `OPEN →` CTA. Keep the existing queue SVG art. The meta description mentions both simulations. |
-| `sw.js` | Add `/queue/`, every `queue/*` file, `assets/sim.css`, `assets/code-panel.js`, `assets/tour.js`. Remove the `stack/code-panel.js` and `stack/tour.js` entries. Bump `CACHE_VERSION` on every deploy (currently `'v8'`). |
+| `sw.js` | Add `/queue/`, every `queue/*` file, `assets/sim.css`, `assets/code-panel.js`, `assets/tour.js`. Remove the `stack/code-panel.js` and `stack/tour.js` entries. Bump `CACHE_VERSION` on every deploy (currently `'v9'`). |
 | `STACK.md` | Update the §3.2 tree, the §3.4/§7.6 script and expected-file names, the §3.5 flow and QUEUE card row, and the §11 landing item, so they match the new layout. |
 
 ### 3.4 Local Preview
@@ -725,7 +725,7 @@ Talking points:
 - [ ] `node scripts/check-c.mjs` passes for both programs.
 - [ ] Shared `assets/` promotion leaves the stack page visually and behaviorally identical.
 - [ ] Landing QUEUE card opens `/queue/`.
-- [ ] Offline after the first visit (`sw.js` precache, `CACHE_VERSION` `'v8'`).
+- [ ] Offline after the first visit (`sw.js` precache, `CACHE_VERSION` `'v9'`).
 - [ ] Zero third-party requests and ≤ 30 KB gzipped code per page.
 - [ ] Responsive per §7.6.
 - [ ] Tour per §7.7.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dsa-reporting-g3-program-simulation.vercel.app/sitemap.xml

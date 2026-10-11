@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'v8';
+const CACHE_VERSION = 'v9';
 const CACHE_NAME = 'dsa-sims-' + CACHE_VERSION;
 
 const PRECACHE = [
