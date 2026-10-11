@@ -1,0 +1,305 @@
+/* Landing page: cover layout, decorative note, simulation cards, entrance. */
+.page-landing {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  background-color: var(--pink);
+  overflow-x: hidden;
+  text-align: center;
+}
+
+/* Decorative sticky note, hidden on small screens. */
+.note {
+  position: absolute;
+  top: clamp(1rem, 4vw, 2.5rem);
+  left: clamp(1rem, 4vw, 2.5rem);
+  z-index: 2;
+  display: flex;
+  width: clamp(92px, 12vw, 132px);
+  aspect-ratio: 1 / 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .1em;
+  padding: 1rem;
+  border: var(--border);
+  border-radius: 4px;
+  background: var(--note);
+  color: var(--black);
+  font-weight: 700;
+  line-height: 1.1;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .18);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+/* Centered cover column. */
+.cover {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  padding: clamp(3rem, 9vh, 6rem) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 5vh, 3.5rem);
+}
+
+.cover__eyebrow {
+  margin: 0;
+}
+
+.cover__title {
+  display: block;
+}
+
+/* The wordmark's inter-word gap (flex items drop whitespace). */
+.wordmark__gap {
+  display: inline-block;
+  width: .4em;
+  flex: none;
+}
+
+.tagline {
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(1rem, .6rem + 1.4vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+/* Simulation cards. */
+.sim-list {
+  display: grid;
+  width: 100%;
+  max-width: 880px;
+  margin: clamp(.5rem, 2vw, 1.5rem) 0 0;
+  padding: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  list-style: none;
+}
+
+.sim-list__item {
+  display: flex;
+  animation: card-rise .32s var(--ease-out) .6s both;
+}
+
+.sim-list__item:nth-child(2) {
+  animation-delay: .66s;
+}
+
+.sim-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  color: var(--black);
+  text-decoration: none;
+  transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out);
+}
+
+.sim-card:hover,
+.sim-card:focus-visible {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.sim-card.is-soon {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+.sim-card.is-soon:hover,
+.sim-card.is-soon:focus-visible {
+  transform: rotate(var(--tilt, 0deg));
+  box-shadow: var(--shadow);
+}
+
+.sim-card__eyebrow,
+.sim-card__title,
+.sim-card__sub,
+.sim-card__meta {
+  margin: 0;
+}
+
+.sim-card__art {
+  display: block;
+  width: min(58%, 168px);
+  height: auto;
+}
+
+.sim-card__sub {
+  font-weight: 700;
+}
+
+.sim-card__meta {
+  font-size: .875rem;
+  opacity: .75;
+}
+
+.sim-card__cta {
+  margin-top: auto;
+}
+
+.sim-card__stamp {
+  position: static;
+  align-self: center;
+  margin-top: .75rem;
+  background: rgba(243, 230, 214, .85);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+}
+
+/* Footer with the offline indicator. */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+  padding: 1rem clamp(1.25rem, 5vw, 4rem) calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  font-size: .875rem;
+}
+
+.site-footer__copy {
+  margin: 0;
+  font-weight: 700;
+}
+
+.offline-pill {
+  display: none;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .85rem;
+  border: var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+html[data-offline="ready"] .offline-pill {
+  display: inline-flex;
+}
+
+/* Entrance: wordmark letters pop, highlighter swipes, cards rise. */
+@keyframes letter-pop {
+  from {
+    opacity: 0;
+    transform: rotate(var(--r, 0deg)) translateY(var(--y, 0)) scale(.6);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--r, 0deg)) translateY(var(--y, 0)) scale(1);
+  }
+}
+
+@keyframes highlight-swipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wordmark__l {
+  animation: letter-pop .45s var(--ease-out) both;
+}
+
+.wordmark__l:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.wordmark__l:nth-child(2) {
+  animation-delay: 40ms;
+}
+
+.wordmark__l:nth-child(3) {
+  animation-delay: 80ms;
+}
+
+.wordmark__l:nth-child(5) {
+  animation-delay: 160ms;
+}
+
+.wordmark__l:nth-child(6) {
+  animation-delay: 200ms;
+}
+
+.wordmark__l:nth-child(7) {
+  animation-delay: 240ms;
+}
+
+.wordmark__l:nth-child(8) {
+  animation-delay: 280ms;
+}
+
+.page-landing .text-highlight::after {
+  animation: highlight-swipe .4s var(--ease-out) .5s both;
+}
+
+/* Tablet and below: cards stack and drop the tilt. */
+@media (max-width: 767px) {
+  .sim-list {
+    max-width: 420px;
+    grid-template-columns: 1fr;
+  }
+
+  .sim-card {
+    transform: none;
+  }
+
+  .sim-card:hover,
+  .sim-card:focus-visible {
+    transform: translate(-2px, -2px);
+  }
+
+  .sim-card.is-soon:hover,
+  .sim-card.is-soon:focus-visible {
+    transform: none;
+  }
+}
+
+/* Keep the wordmark inside 320px-wide screens. */
+@media (max-width: 480px) {
+  .cover__title .wordmark {
+    font-size: clamp(2.5rem, 15vw, 3.5rem);
+  }
+}
+
+@media (max-width: 575px) {
+  .note {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-list__item,
+  .wordmark__l,
+  .page-landing .text-highlight::after {
+    animation: none;
+  }
+
+  .page-landing .text-highlight::after {
+    clip-path: inset(0 0 0 0);
+  }
+}

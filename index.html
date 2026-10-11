@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FF87AB">
+  <title>DSA SIMS · Group 3</title>
+  <meta name="description" content="DSA SIMS by Group 3: interactive data-structure simulations. Explore a Stack-based undo/redo text editor and a Queue-based drive-thru, and see Last-In, First-Out and First-In, First-Out happen live.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/dm-sans-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/titan-one-latin.woff2">
+
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="assets/landing.css">
+  <script src="assets/sw-register.js" defer></script>
+</head>
+<body class="page-landing pattern-squares">
+  <div class="note" aria-hidden="true">
+    <span>PUSH. POP.</span>
+    <span>REPEAT.</span>
+  </div>
+
+  <main class="cover">
+    <p class="eyebrow cover__eyebrow">GROUP 3 PRESENTS</p>
+
+    <h1 class="cover__title" aria-label="DSA SIMS">
+      <span class="wordmark">
+        <span class="wordmark__l" aria-hidden="true" style="--r:-5deg;--y:.06em">D</span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:4deg;--y:-.05em">S</span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:-3deg;--y:.07em">A</span>
+        <span class="wordmark__gap" aria-hidden="true"></span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:5deg;--y:.09em">S</span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:-4deg;--y:-.06em">I</span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:3deg;--y:.06em">M</span>
+        <span class="wordmark__l" aria-hidden="true" style="--r:-6deg;--y:-.07em">S</span>
+      </span>
+    </h1>
+
+    <p class="tagline cover__tagline">
+      TWO DATA STRUCTURES. <span class="text-highlight">ZERO BORING SLIDES.</span> PICK ONE ↓
+    </p>
+
+    <ul class="sim-list">
+      <li class="sim-list__item">
+        <a class="card sim-card" href="stack/index.html" style="--tilt:-3deg">
+          <p class="eyebrow sim-card__eyebrow">SIMULATION 01</p>
+          <svg class="sim-card__art" viewBox="0 0 120 104" aria-hidden="true" focusable="false">
+            <rect x="28" y="12" width="64" height="26" rx="4" fill="var(--cream)" stroke="var(--black)" stroke-width="3"></rect>
+            <rect x="28" y="42" width="64" height="26" rx="4" fill="var(--lime)" stroke="var(--black)" stroke-width="3"></rect>
+            <rect x="28" y="72" width="64" height="26" rx="4" fill="var(--pink)" stroke="var(--black)" stroke-width="3"></rect>
+          </svg>
+          <h2 class="h3 sim-card__title">STACK</h2>
+          <p class="sim-card__sub">UNDO / REDO TEXT EDITOR</p>
+          <p class="sim-card__meta">LAST IN, FIRST OUT</p>
+          <span class="btn sim-card__cta">OPEN →</span>
+        </a>
+      </li>
+      <li class="sim-list__item">
+        <a class="card sim-card" href="queue/index.html" style="--tilt:3deg">
+          <p class="eyebrow sim-card__eyebrow">SIMULATION 02</p>
+          <svg class="sim-card__art" viewBox="0 0 120 60" aria-hidden="true" focusable="false">
+            <rect x="6" y="20" width="24" height="24" rx="4" fill="var(--pink)" stroke="var(--black)" stroke-width="3"></rect>
+            <rect x="34" y="20" width="24" height="24" rx="4" fill="var(--lime)" stroke="var(--black)" stroke-width="3"></rect>
+            <rect x="62" y="20" width="24" height="24" rx="4" fill="var(--cream)" stroke="var(--black)" stroke-width="3"></rect>
+            <path d="M92 32h16m-6-6 6 6-6 6" fill="none" stroke="var(--black)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <h2 class="h3 sim-card__title">QUEUE</h2>
+          <p class="sim-card__sub">DRIVE-THRU &amp; KITCHEN</p>
+          <p class="sim-card__meta">FIRST IN, FIRST OUT</p>
+          <span class="btn sim-card__cta">OPEN →</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <p class="site-footer__copy">©2026 GROUP 3 · DSA REPORT</p>
+    <span id="offline-pill" class="offline-pill">✓ OFFLINE READY</span>
+  </footer>
+</body>
+</html>

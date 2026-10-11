@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+    <title>Drive-Thru &amp; Kitchen · Queue (FIFO) · DSA SIMS</title>
+    <meta name="description" content="Learn FIFO queues with an interactive drive-thru and kitchen simulation.">
+    <meta name="theme-color" content="#F3E6D6">
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="../assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/titan-one-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link rel="stylesheet" href="../assets/sim.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="../assets/sw-register.js"></script>
+    <script defer src="queue.js"></script>
+    <script defer src="drive-thru.js"></script>
+    <script defer src="c-source.js"></script>
+    <script defer src="../assets/code-panel.js"></script>
+    <script defer src="../assets/tour.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body class="page-queue">
+    <header class="site-header">
+      <a class="btn btn--white site-header__home" href="../index.html" aria-label="Home">← <span class="site-header__home-text">HOME</span></a>
+      <a class="wordmark wordmark--small site-header__wordmark" href="../index.html" aria-label="DSA SIMS home"><span class="wordmark__l" style="--r:-5deg;--y:.02em">D</span><span class="wordmark__l" style="--r:-2deg;--y:-.01em">S</span><span class="wordmark__l" style="--r:2deg;--y:.02em">A</span><span class="wordmark__l wordmark__gap" style="--r:0deg"> </span><span class="wordmark__l" style="--r:-3deg;--y:.02em">S</span><span class="wordmark__l" style="--r:1deg;--y:-.01em">I</span><span class="wordmark__l" style="--r:4deg;--y:.02em">M</span><span class="wordmark__l" style="--r:2deg">S</span></a>
+      <div class="site-header__actions">
+        <details id="settings" class="settings">
+          <summary class="btn btn-round settings__toggle" title="Settings">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.5"/><circle cx="10" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/></svg>
+            <span class="visually-hidden">SETTINGS</span>
+          </summary>
+          <div class="settings__body queue-settings">
+            <label class="settings__capacity" for="lane-size">LANE SIZE
+              <select id="lane-size">
+                <option value="3">3</option><option value="4">4</option><option value="5" selected>5</option><option value="6">6</option>
+              </select>
+            </label>
+            <fieldset class="pills">
+              <legend>COOK TIME</legend>
+              <label><input type="radio" name="cook-time" value="0"><span>OFF</span></label>
+              <label><input type="radio" name="cook-time" value="1500" checked><span>1.5 S</span></label>
+              <label><input type="radio" name="cook-time" value="3000"><span>3 S</span></label>
+            </fieldset>
+            <fieldset class="pills">
+              <legend>CALLOUTS</legend>
+              <label><input type="radio" name="callouts" value="on" checked><span>ON</span></label>
+              <label><input type="radio" name="callouts" value="off"><span>OFF</span></label>
+            </fieldset>
+          </div>
+        </details>
+        <button id="tour-start" type="button" class="btn btn-round" aria-haspopup="dialog" title="Show me around">TIPS</button>
+      </div>
+      <p class="eyebrow site-header__eyebrow">SIMULATION 02 · QUEUE (FIFO)</p>
+      <h1 class="h2 site-header__title">DRIVE-THRU &amp; KITCHEN</h1>
+    </header>
+
+    <main class="queue-layout">
+      <section class="queue-stage" aria-label="Drive-thru simulation">
+        <section id="lane-panel" class="lane-panel" aria-label="Drive-thru lane">
+          <header class="lane-panel__header">
+            <div class="lane-heading"><h2>DRIVE-THRU LANE</h2><span id="lane-size-readout" class="lane-size">0/5</span></div>
+            <div class="lane-controls">
+              <div class="lane-toggle" role="group" aria-label="Lane mode">
+                <button id="mode-straight" type="button" aria-pressed="true">STRAIGHT</button>
+                <button id="mode-ring" type="button" aria-pressed="false">RING</button>
+              </div>
+              <button id="btn-peek" type="button" class="btn btn--white">PEEK</button>
+              <button id="btn-clear" type="button" class="btn btn--white">CLEAR</button>
+            </div>
+          </header>
+          <span id="full-stamp" class="stamp full-stamp" hidden>FULL</span>
+          <div class="lane-scene">
+            <div class="pickup-booth" aria-label="Pickup window">
+              <span class="booth-window">PICKUP</span>
+              <span id="pickup-light" class="pickup-light" aria-label="Kitchen status: idle"></span>
+            </div>
+            <div id="straight-lane" class="straight-lane">
+              <div id="straight-indices" class="straight-indices" aria-hidden="true"></div>
+              <div class="asphalt straight-asphalt"><div class="lane-dashes" aria-hidden="true"></div><div id="straight-track" class="straight-track" role="group" aria-label="Straight lane slots"></div></div>
+              <div id="straight-pointers" class="straight-pointers" aria-hidden="true"></div>
+              <p id="straight-watch" class="lane-watch"></p>
+            </div>
+            <div id="ring-lane" class="ring-lane" hidden>
+              <div class="asphalt ring-asphalt"><div id="ring-track" class="ring-track" role="group" aria-label="Circular lane slots"></div>
+                <div class="ring-center"><span id="ring-watch"></span><span id="ring-formula" class="ring-formula" hidden></span></div>
+              </div>
+            </div>
+            <div class="entry-gate" aria-label="Entry gate">
+              <span class="gate-sign">GATE</span><span class="gate-arm" aria-hidden="true"></span>
+              <span id="turned-away" class="turned-away">TURNED AWAY <b>0</b></span>
+            </div>
+          </div>
+          <div id="lane-status" class="lane-status" aria-live="polite"></div>
+          <div id="overflow-stamp" class="stamp event-stamp" hidden>QUEUE OVERFLOW</div>
+          <div id="no-cutting" class="stamp event-stamp no-cutting" hidden>NO CUTTING</div>
+          <span id="wrap-badge" class="wrap-badge" hidden>WRAP</span>
+        </section>
+
+        <div class="queue-lower">
+          <section class="order-panel" aria-label="Order and controls">
+            <h2>YOUR ORDER</h2>
+            <div id="menu-chips" class="menu-chips" role="group" aria-label="Choose up to three menu items">
+              <button type="button" class="menu-chip" data-order="BURGER" aria-pressed="true">BURGER</button>
+              <button type="button" class="menu-chip" data-order="FRIES" aria-pressed="false">FRIES</button>
+              <button type="button" class="menu-chip" data-order="SODA" aria-pressed="false">SODA</button>
+              <button type="button" class="menu-chip" data-order="NUGGETS" aria-pressed="false">NUGGETS</button>
+              <button type="button" class="menu-chip" data-order="SUNDAE" aria-pressed="false">SUNDAE</button>
+            </div>
+            <div class="order-actions">
+              <button id="btn-arrive" type="button" class="btn">ARRIVE</button>
+              <button id="btn-serve" type="button" class="btn btn--white">SERVE</button>
+              <button id="btn-peek-mobile" type="button" class="btn btn--white mobile-peek">PEEK</button>
+            </div>
+          </section>
+
+          <section id="kitchen" class="kitchen" aria-label="Kitchen" aria-live="polite">
+            <header class="kitchen__header"><h2>KITCHEN</h2><span id="kitchen-state" class="ready-pill" hidden>READY ✓</span></header>
+            <div class="kitchen__body">
+              <div class="cook-card">
+                <p id="now-cooking" class="now-cooking">NO ORDERS</p>
+                <div class="cook-progress" aria-hidden="true"><span id="cook-progress-fill"></span></div>
+                <p id="cook-status" class="cook-status">IDLE</p>
+              </div>
+              <div class="ticket-section"><h3>TICKET RAIL</h3><ol id="ticket-rail" class="ticket-rail" aria-label="Orders front to rear"></ol></div>
+            </div>
+          </section>
+        </div>
+        <div id="bubble" class="bubble queue-toast" role="status" aria-live="polite" hidden><p class="bubble__text"></p></div>
+      </section>
+
+      <section class="queue-panels" data-tab="code">
+        <div class="tabs" role="tablist" aria-label="Code and log">
+          <button id="tab-code" type="button" role="tab" aria-selected="true" aria-controls="code-panel">C CODE</button>
+          <button id="tab-log" type="button" role="tab" aria-selected="false" aria-controls="log-panel">LOG</button>
+        </div>
+        <section id="code-panel" class="code-panel terminal" role="tabpanel" aria-labelledby="tab-code"></section>
+        <section id="log-panel" class="log-panel terminal" role="tabpanel" aria-labelledby="tab-log">
+          <h2 class="log-panel__title">&gt; OPERATION LOG</h2>
+          <ol id="log" class="log"></ol>
+        </section>
+      </section>
+    </main>
+
+    <div class="mobile-action-spacer" aria-hidden="true"></div>
+  </body>
+</html>

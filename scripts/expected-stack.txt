@@ -1,0 +1,55 @@
+1  open
+  doc   ""
+  undo  []  size 0/6
+  redo  []  size 0/6
+2  type Hello
+  doc   "Hello"
+  undo  [+"Hello"]  size 1/6
+  redo  []  size 0/6
+3  type World
+  doc   "Hello World"
+  undo  [+"Hello", +"World"]  size 2/6
+  redo  []  size 0/6
+4  peek -> +"World" (size still 2)
+5  undo
+  doc   "Hello"
+  undo  [+"Hello"]  size 1/6
+  redo  [+"World"]  size 1/6
+6  redo
+  doc   "Hello World"
+  undo  [+"Hello", +"World"]  size 2/6
+  redo  []  size 0/6
+7  delete
+  doc   "Hello"
+  undo  [+"Hello", +"World", -"World"]  size 3/6
+  redo  []  size 0/6
+8  undo
+  doc   "Hello World"
+  undo  [+"Hello", +"World"]  size 2/6
+  redo  [-"World"]  size 1/6
+9  undo
+  doc   "Hello"
+  undo  [+"Hello"]  size 1/6
+  redo  [-"World", +"World"]  size 2/6
+10 type There (redo cleared)
+  doc   "Hello There"
+  undo  [+"Hello", +"There"]  size 2/6
+  redo  []  size 0/6
+11 third undo returns false (UNDERFLOW)
+11 after undo x3
+  doc   ""
+  undo  []  size 0/6
+  redo  [+"There", +"Hello"]  size 2/6
+12 max history = 3
+  doc   ""
+  undo  []  size 0/3
+  redo  []  size 0/3
+13 type a b c d (OVERFLOW evicts +a)
+  doc   "a b c d"
+  undo  [+"b", +"c", +"d"]  size 3/3
+  redo  []  size 0/3
+14 fourth undo returns false
+14 after undo x3
+  doc   "a"
+  undo  []  size 0/3
+  redo  [+"d", +"c", +"b"]  size 3/3

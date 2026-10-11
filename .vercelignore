@@ -1,0 +1,5 @@
+scripts/
+*.md
+.git
+.gitignore
+serve.json
